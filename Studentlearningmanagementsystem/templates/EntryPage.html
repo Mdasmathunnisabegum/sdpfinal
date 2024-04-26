@@ -1,0 +1,75 @@
+{% load static %}
+<!-- templates/homepage.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SLMS - Student Learning Management System</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('path_to_background_image.jpg'); /* Replace with the path to your background image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        header {
+            background-color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .logo {
+            width: 150px;
+            height: auto;
+        }
+        .stats {
+            text-align: center;
+            color: #fff;
+            margin-top: 50px;
+        }
+        .stats i {
+            font-size: 24px;
+            margin-right: 10px;
+        }
+        .login-btn {
+            display: block;
+            width: 150px;
+            margin: 20px auto;
+            padding: 10px;
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="path_to_logo.png" alt="SLMS Logo" class="logo"> <!-- Replace with the path to your logo -->
+    </header>
+
+    <div class="stats">
+        <p><i class="fa fa-users"></i> Students: 1000</p> <!-- Fake stats, replace with actual data -->
+        <p><i class="fa fa-book"></i> Courses: 50</p> <!-- Fake stats, replace with actual data -->
+    </div>
+
+    <a href="{% url 'login' %}" class="login-btn">Login</a>
+
+    {% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,340 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="page-header">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3 class="page-title">Welcome Admin!</h3>
+            <ul class="breadcrumb">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-one w-100">
+            <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                    <div class="db-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="db-info">
+                        <h3>{{ student_count }}</h3>
+                        <h6>Students</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-two w-100">
+            <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                    <div class="db-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="db-info">
+                        <h3>{{ staff_count }}</h3>
+                        <h6>Staff</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-three w-100">
+            <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                    <div class="db-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="db-info">
+                        <h3>{{ program_count }}</h3>
+                        <h6>Programs</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12 d-flex">
+        <div class="card bg-four w-100">
+            <div class="card-body">
+                <div class="db-widgets d-flex justify-content-between align-items-center">
+                    <div class="db-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="db-info">
+                        <h3>{{ course_count }}</h3>
+                        <h6>Courses</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h5 class="card-title">All Data</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="all_details"></div>
+            </div>
+            <!-- Donut Chart for Students, Staff, Programs, Courses -->
+            <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+            <script>
+                var donutData = [{{ student_count }}, {{ staff_count }}, {{ course_count }}, {{ program_count }}];
+                var donutOptions = {
+                    series: donutData,
+                    chart: {
+                        width: 380,
+                        type: 'donut',
+                    },
+                    labels: ['Students', 'Staff', 'Courses', 'Programs'],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+                var donutChart = new ApexCharts(document.querySelector("#all_details"), donutOptions);
+                donutChart.render();
+            </script>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h3 class="card-title">Number of Students</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="student_gender"></div>
+
+            </div>
+            <!-- Bar Chart for Number of Students -->
+            <script>
+                var pieData = {
+                    series: [{{ student_gender_male }}, {{ student_gender_female }}],
+                    chart: {
+                        type: 'pie', // Changed to 'pie' for a pie chart
+                        height: 300,
+                        width: '65%',
+                        toolbar: {
+                            show: false
+                        },
+                    },
+                    labels: ["Boys", "Girls"], // Added labels for the pie chart sections
+                    dataLabels: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                labels: {
+                                    show: false
+                                }
+                            }
+                        }
+                    },
+                    title: {
+                        text: '',
+                        align: 'left',
+                        style: {
+                            fontSize: '18px'
+                        }
+                    }
+                };
+                
+                var pieChart = new ApexCharts(document.querySelector('#student_gender'), pieData);
+                pieChart.render();
+                
+                
+            </script>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h3 class="card-title">Student & Staff</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="student_staff"></div>
+            </div>
+            <!-- Donut Chart for Student & Staff -->
+            <script>
+                var studentStaffData = [{{ student_count }}, {{ staff_count }}];
+                var studentStaffOptions = {
+                    series: studentStaffData,
+                    chart: {
+                        width: 500,
+                        type: 'donut',
+                    },
+                    labels: ['Students', 'Staff'],
+                    plotOptions: {
+                        pie: {
+                            startAngle: -90,
+                            endAngle: 270
+                        }
+                    },
+                    dataLabels: {
+                        enabled: false
+                    },
+                    fill: {
+                        type: 'gradient',
+                    },
+                    legend: {
+                        formatter: function(val, opts) {
+                            return val + " - " + opts.w.globals.series[opts.seriesIndex]
+                        }
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }]
+                };
+                var studentStaffChart = new ApexCharts(document.querySelector("#student_staff"), studentStaffOptions);
+                studentStaffChart.render();
+            </script>
+        </div>
+    </div>
+    
+    <div class="col-md-12 col-lg-6">
+        <div class="card card-chart">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-6">
+                        <h3 class="card-title">Programs & Courses</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="programs_courses_chart"></div>
+            </div>
+            <!-- Add content for Programs & Courses chart here --><!-- Add content for Programs & Courses chart here -->
+<script>
+    // Data for the bar chart (Count of Programs and Courses)
+    var programsCoursesData = {
+        series: [{
+            name: "Programs",
+            data: [{{ program_count }}],
+        }, {
+            name: "Courses",
+            data: [{{ course_count }}],
+        }],
+        chart: {
+            type: 'bar',
+            height: 350,
+            width: '100%',
+            stacked: true,
+            toolbar: {
+                show: false
+            },
+        },
+        dataLabels: {
+            enabled: false
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '45%',
+            }
+        },
+        xaxis: {
+            labels: {
+                show: false
+            },
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            },
+            categories: ['Count'],
+        },
+        yaxis: {
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            },
+            labels: {
+                style: {
+                    colors: '#777'
+                }
+            },
+            title: {
+                text: 'Count',
+                style: {
+                    fontSize: '18px'
+                }
+            }
+        },
+    };
+
+    var programsCoursesChart = new ApexCharts(document.querySelector('#programs_courses_chart'), programsCoursesData);
+    programsCoursesChart.render();
+</script>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card flex-fill fb sm-box">
+            <i class="fab fa-facebook"></i>
+            <h6>50,095</h6>
+            <p>Likes</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card flex-fill twitter sm-box">
+            <i class="fab fa-twitter"></i>
+            <h6>48,596</h6>
+            <p>Follows</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card flex-fill insta sm-box">
+            <i class="fab fa-instagram"></i>
+            <h6>52,085</h6>
+            <p>Follows</p>
+        </div>
+    </div>
+    <div class="col-xl-3 col-sm-6 col-12">
+        <div class="card flex-fill linkedin sm-box">
+            <i class="fab fa-linkedin-in"></i>
+            <h6>69,050</h6>
+            <p>Follows</p>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{% endblock %}
